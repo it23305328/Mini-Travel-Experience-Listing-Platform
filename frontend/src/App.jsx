@@ -5,6 +5,7 @@ import Navbar from './components/Navbar';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Feed from './pages/Feed';
+import Home from './pages/Home';
 import ListingDetail from './pages/ListingDetail';
 import CreateListing from './pages/CreateListing';
 import EditListing from './pages/EditListing';
@@ -17,7 +18,8 @@ function App() {
                 <div className="app-main">
                     <Navbar />
                     <Routes>
-                        <Route path="/" element={<Feed />} />
+                        <Route path="/" element={<Home />} />
+                        <Route path="/feed" element={<Feed />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
                         <Route path="/create-listing" element={<CreateListing />} />

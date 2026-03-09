@@ -22,11 +22,11 @@ const Navbar = () => {
                     <Link to="/" className="nav-link">
                         Home
                     </Link>
+                    <Link to="/feed" className="nav-link">
+                        Feed
+                    </Link>
                     {user ? (
                         <>
-                            <Link to="/" className="nav-link">
-                                Feed
-                            </Link>
                             <Link to="/create-listing" className="nav-link">
                                 Share Experience
                             </Link>

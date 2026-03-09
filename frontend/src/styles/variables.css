@@ -1,6 +1,8 @@
 :root {
     /* Premium Color Palette */
     --primary-dark: #0f172a;
+    --brand-blue: #00aeef;
+    --brand-blue-hover: #0096ce;
     --accent-gold: #fbbf24;
     --accent-gold-hover: #f59e0b;
     --bg-light: #f8fafc;
