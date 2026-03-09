@@ -40,7 +40,7 @@ const CreateListing = () => {
                     Authorization: `Bearer ${user.token}`,
                 },
             });
-            navigate('/'); // Redirect to home/feed after success
+            navigate('/');
         } catch (err) {
             setError(err.response?.data?.message || 'Something went wrong. Please try again.');
             setLoading(false);
@@ -48,120 +48,104 @@ const CreateListing = () => {
     };
 
     return (
-        <div className="max-w-2xl mx-auto px-4 py-12">
-            <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
-                <div className="bg-blue-600 px-8 py-10 text-white text-center">
-                    <h1 className="text-3xl font-bold">Share Your Experience</h1>
-                    <p className="mt-2 text-blue-100 italic">Tell the world about your amazing journey</p>
+        <div className="container section-py" style={{ maxWidth: '800px' }}>
+            <div className="auth-card" style={{ maxWidth: '100%', padding: '0', overflow: 'hidden' }}>
+                <div style={{
+                    background: 'var(--color-primary)',
+                    padding: '3rem',
+                    color: 'var(--color-white)',
+                    textAlign: 'center'
+                }}>
+                    <h1 style={{ fontSize: '2.5rem', fontWeight: '800', marginBottom: '0.5rem' }}>Share Your Journey</h1>
+                    <p style={{ opacity: '0.8', fontStyle: 'italic' }}>Curate a premium travel experience for the community</p>
                 </div>
 
-                <form onSubmit={handleSubmit} className="p-8 space-y-6">
+                <form onSubmit={handleSubmit} style={{ padding: '3rem' }}>
                     {error && (
-                        <div className="bg-red-50 border-l-4 border-red-500 text-red-700 p-4 mb-4 rounded" role="alert">
-                            <p>{error}</p>
-                        </div>
+                        <div className="alert alert-error">{error}</div>
                     )}
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label className="block text-gray-700 font-semibold mb-2" htmlFor="title">
-                                Title
-                            </label>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1.5rem' }}>
+                        <div className="form-group">
+                            <label htmlFor="title">Title</label>
                             <input
                                 type="text"
                                 id="title"
                                 name="title"
                                 value={formData.title}
                                 onChange={handleChange}
-                                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                                placeholder="e.g. Sunset at Santorini"
+                                placeholder="e.g. Midnight in Paris"
                                 required
                             />
                         </div>
-                        <div>
-                            <label className="block text-gray-700 font-semibold mb-2" htmlFor="location">
-                                Location
-                            </label>
+                        <div className="form-group">
+                            <label htmlFor="location">Location</label>
                             <input
                                 type="text"
                                 id="location"
                                 name="location"
                                 value={formData.location}
                                 onChange={handleChange}
-                                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                                placeholder="e.g. Greece"
+                                placeholder="e.g. France"
                                 required
                             />
                         </div>
                     </div>
 
-                    <div>
-                        <label className="block text-gray-700 font-semibold mb-2" htmlFor="imageUrl">
-                            Image URL
-                        </label>
+                    <div className="form-group">
+                        <label htmlFor="imageUrl">Image URL</label>
                         <input
                             type="url"
                             id="imageUrl"
                             name="imageUrl"
                             value={formData.imageUrl}
                             onChange={handleChange}
-                            className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                            placeholder="https://images.unsplash.com/..."
+                            placeholder="Link to a stunning high-res image"
                             required
                         />
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label className="block text-gray-700 font-semibold mb-2" htmlFor="price">
-                                Price (Optional)
-                            </label>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem' }}>
+                        <div className="form-group">
+                            <label htmlFor="price">Price (USD)</label>
                             <input
                                 type="number"
                                 id="price"
                                 name="price"
                                 value={formData.price}
                                 onChange={handleChange}
-                                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                                placeholder="e.g. 150"
+                                placeholder="Estimated cost per person"
                             />
                         </div>
-                        <div className="flex items-end">
-                            <p className="text-xs text-gray-400 pb-3 italic italic">
-                                Use a direct link to an image (JPEG, PNG, etc.)
+                        <div className="form-group" style={{ justifyContent: 'center' }}>
+                            <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', italic: 'italic' }}>
+                                Use direct links from Unsplash or Pexels for best results.
                             </p>
                         </div>
                     </div>
 
-                    <div>
-                        <label className="block text-gray-700 font-semibold mb-2" htmlFor="shortDescription">
-                            Short Description
-                        </label>
+                    <div className="form-group">
+                        <label htmlFor="shortDescription">Short Description</label>
                         <input
                             type="text"
                             id="shortDescription"
                             name="shortDescription"
                             value={formData.shortDescription}
                             onChange={handleChange}
-                            className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                            placeholder="A catch line for your listing"
+                            placeholder="A brief hook for your trip"
                             maxLength="150"
                             required
                         />
                     </div>
 
-                    <div>
-                        <label className="block text-gray-700 font-semibold mb-2" htmlFor="fullDescription">
-                            Full Description
-                        </label>
+                    <div className="form-group">
+                        <label htmlFor="fullDescription">Full Journey Details</label>
                         <textarea
                             id="fullDescription"
                             name="fullDescription"
                             value={formData.fullDescription}
                             onChange={handleChange}
-                            rows="5"
-                            className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none"
-                            placeholder="Tell the full story..."
+                            placeholder="Describe every detail of your experience..."
                             required
                         ></textarea>
                     </div>
@@ -169,12 +153,10 @@ const CreateListing = () => {
                     <button
                         type="submit"
                         disabled={loading}
-                        className={`w-full py-4 rounded-xl text-white font-bold text-lg shadow-lg transition-all duration-300 ${loading
-                                ? 'bg-blue-400 cursor-not-allowed'
-                                : 'bg-blue-600 hover:bg-blue-700 hover:shadow-blue-200'
-                            }`}
+                        className="btn btn-primary btn-full"
+                        style={{ padding: '1.25rem' }}
                     >
-                        {loading ? 'Publishing...' : 'Publish Experience'}
+                        {loading ? 'Creating Experience...' : 'Publish to Feed'}
                     </button>
                 </form>
             </div>

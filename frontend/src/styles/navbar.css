@@ -1,0 +1,62 @@
+@import "./variables.css";
+
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 2000;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(15, 23, 42, 0.05);
+    height: 80px;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.nav-brand {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--primary-dark);
+    letter-spacing: -0.05em;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+}
+
+.nav-link {
+    font-weight: 600;
+    color: var(--text-muted);
+    transition: var(--transition);
+    font-size: 0.9375rem;
+}
+
+.nav-link:hover {
+    color: var(--primary-dark);
+}
+
+.nav-user {
+    font-weight: 500;
+    color: var(--text-muted);
+    font-style: italic;
+    font-size: 0.875rem;
+}
+
+@media (max-width: 640px) {
+    .nav-links {
+        gap: 1rem;
+    }
+
+    .nav-link {
+        font-size: 0.8125rem;
+    }
+}

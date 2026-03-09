@@ -1,0 +1,21 @@
+:root {
+    /* Premium Color Palette */
+    --primary-dark: #0f172a;
+    --accent-gold: #fbbf24;
+    --accent-gold-hover: #f59e0b;
+    --bg-light: #f8fafc;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --white: #ffffff;
+    --error: #ef4444;
+
+    /* Typography */
+    --font-family: 'Poppins', 'Inter', sans-serif;
+
+    /* Layout tokens */
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --shadow-subtle: 0 4px 20px rgba(0, 0, 0, 0.05);
+    --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}

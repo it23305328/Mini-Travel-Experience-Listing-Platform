@@ -12,7 +12,7 @@ function App() {
     return (
         <AuthProvider>
             <Router>
-                <div className="min-h-screen bg-gray-50 text-gray-900 font-sans">
+                <div className="app-main">
                     <Navbar />
                     <Routes>
                         <Route path="/" element={<Feed />} />
