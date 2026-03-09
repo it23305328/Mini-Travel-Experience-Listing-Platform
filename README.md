@@ -63,12 +63,18 @@ npm run dev
 ---
 
 ## ✨ Features Implemented
-- ✅ **Secure Authentication**: User registration and login with JWT stored in local storage.
-- ✅ **Dynamic Feed**: Real-time listing feed sorted from newest to oldest.
-- ✅ **Immersive Details**: Dedicated detail pages for every experience with rich content.
-- ✅ **Creation Form**: Protected form for logged-in users to share new experiences.
-- ✅ **Responsive Design**: Professional UI built with Tailwind CSS, featuring hover effects and glassmorphism.
+
+### 🔹 Core Functionality
+- ✅ **Secure Authentication**: User registration and login with encrypted passwords and JWT stored securely in local storage.
+- ✅ **Full CRUD Operations**: Users can seamlessly **Create**, read, **Update**, and **Delete** their travel experiences. Ownership verification ensures users can only modify their own posts.
+- ✅ **Smart Search & Filtering**: A powerful search function on the Home page to instantly find experiences by title, destination, or keywords.
+- ✅ **Dynamic Feed**: Real-time listing feed on the Home and Feed pages, intelligently sorted from newest to oldest.
+- ✅ **User Profiles**: A dedicated profile dashboard for users to view and manage all their personal travel listings.
 - ✅ **Relative Timestamps**: Displays how long ago each listing was posted (e.g., "Posted 3 hours ago").
+
+### 🌟 Advanced/Optional Features
+- ☁️ **Cloudinary Image Integration**: Robust implementation of Multer and Cloudinary allowing users to seamlessly upload high-quality experience photos directly from their devices or via URLs.
+- 🎨 **Premium UI/UX Design**: Built exclusively with **Vanilla CSS**, featuring a stunning dark nature palette, glassmorphism overlays, interactive hover states, dynamic loading animations, and an immersive split-screen authentication flow.
 
 ---
 
