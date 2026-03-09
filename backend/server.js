@@ -24,12 +24,16 @@ app.get('/', (req, res) => {
     res.send('API is running...');
 });
 
+const serverless = require('serverless-http');
+
 // Port configuration
 const PORT = process.env.PORT || 5000;
 
-// Commented out for Vercel deployment
-// app.listen(PORT, () => {
-//     console.log(`Server running on port ${PORT}`);
-// });
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });
+}
 
 module.exports = app;
+module.exports.handler = serverless(app);
