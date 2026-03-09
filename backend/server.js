@@ -15,7 +15,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Basic Route
+// Routes
+app.use('/api/auth', require('./routes/authRoutes'));
+app.use('/api/listings', require('./routes/listingRoutes'));
+
 app.get('/', (req, res) => {
     res.send('API is running...');
 });
