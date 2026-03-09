@@ -4,6 +4,13 @@ A modern, high-performance **MERN Stack** application designed for travel enthus
 
 ---
 
+## 🚀 Live Demo
+You can view the live application deployed on Netlify here:
+🔗 **[Live Demo on Netlify](https://your-netlify-app-name.netlify.app/)**
+*(Note: Replace the link above with your actual Netlify deployed URL)*
+
+---
+
 ## 🚀 Project Overview
 The **Mini Travel Experience** platform allows users to create detailed listings of travel destinations, including high-quality images, pricing, and descriptions. It provides a seamless discovery experience through a public feed where travelers can find inspiration for their next journey. The platform prioritizes ease of use, speed, and visual appeal.
 
