@@ -6,8 +6,7 @@ A modern, high-performance **MERN Stack** application designed for travel enthus
 
 ## 🚀 Live Demo
 You can view the live application deployed on Netlify here:
-🔗 **[Live Demo on Netlify](https://your-netlify-app-name.netlify.app/)**
-*(Note: Replace the link above with your actual Netlify deployed URL)*
+🔗 **[Live Demo on Netlify](https://delightful-peony-aa906e.netlify.app/)**
 
 ---
 
@@ -41,10 +40,10 @@ npm install
 - Create a `.env` file in the `backend` folder:
   ```env
   PORT=5000
-  MONGO_URI=your_mongodb_connection_string
+  MONGO_URI=MONGO_URI=mongodb+srv://momentmakerdrive_db_user:muditha2003@cluster0.f8lvj3k.mongodb.net/?appName=Cluster0
   JWT_SECRET=your_super_secret_key
-  CLOUDINARY_CLOUD_NAME=your_cloud_name
-  CLOUDINARY_API_KEY=your_api_key
+  CLOUDINARY_CLOUD_NAME=die0r6avj
+  CLOUDINARY_API_KEY=265568646836566
   CLOUDINARY_API_SECRET=your_api_secret
   ```
 - Start the server:
