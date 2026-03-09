@@ -217,6 +217,26 @@
     color: #1DA1F2;
 }
 
+.auth-password-toggle {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: color 0.2s ease;
+}
+
+.auth-password-toggle:hover {
+    color: var(--brand-blue);
+}
+
 @media (max-width: 968px) {
     .auth-split-container {
         position: relative;
