@@ -1,11 +1,12 @@
 [build]
-  command = "npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend"
+  command = "npm install --prefix backend && npm install --prefix frontend && npx --prefix frontend vite build"
   publish = "frontend/dist"
-  functions = "netlify/functions"
+[functions]
+  directory = "netlify/functions"
 
 [[redirects]]
   from = "/api/*"
-  to = "/.netlify/functions/server/api/:splat"
+  to = "/.netlify/functions/server/:splat"
   status = 200
 
 [[redirects]]
