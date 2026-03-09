@@ -77,9 +77,19 @@ button {
     color: var(--white);
 }
 
+.btn-danger:hover {
+    filter: brightness(0.9);
+    transform: translateY(-2px);
+}
+
 .btn-accent {
     background: var(--accent-gold);
     color: var(--primary-dark);
+}
+
+.btn-accent:hover {
+    background: var(--accent-gold-hover);
+    transform: translateY(-2px);
 }
 
 .btn-full {

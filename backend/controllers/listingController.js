@@ -67,8 +67,70 @@ const getListingById = async (req, res) => {
     }
 };
 
+// @desc    Update listing
+// @route   PUT /api/listings/:id
+// @access  Private
+const updateListing = async (req, res) => {
+    try {
+        const listing = await Listing.findById(req.params.id);
+
+        if (!listing) {
+            return res.status(404).json({ message: 'Listing not found' });
+        }
+
+        // Check for user
+        if (!req.user) {
+            return res.status(401).json({ message: 'User not found' });
+        }
+
+        // Make sure the logged in user matches the listing creator
+        if (listing.creator.toString() !== req.user) {
+            return res.status(401).json({ message: 'User not authorized' });
+        }
+
+        const updatedListing = await Listing.findByIdAndUpdate(req.params.id, req.body, {
+            new: true,
+        });
+
+        res.json(updatedListing);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
+// @desc    Delete listing
+// @route   DELETE /api/listings/:id
+// @access  Private
+const deleteListing = async (req, res) => {
+    try {
+        const listing = await Listing.findById(req.params.id);
+
+        if (!listing) {
+            return res.status(404).json({ message: 'Listing not found' });
+        }
+
+        // Check for user
+        if (!req.user) {
+            return res.status(401).json({ message: 'User not found' });
+        }
+
+        // Make sure the logged in user matches the listing creator
+        if (listing.creator.toString() !== req.user) {
+            return res.status(401).json({ message: 'User not authorized' });
+        }
+
+        await listing.deleteOne();
+
+        res.json({ id: req.params.id, message: 'Listing removed' });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
 module.exports = {
     createListing,
     getAllListings,
     getListingById,
+    updateListing,
+    deleteListing,
 };

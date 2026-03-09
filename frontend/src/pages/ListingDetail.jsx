@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import '../styles/cards.css';
 
 const ListingDetail = () => {
     const { id } = useParams();
+    const { user } = useAuth();
+    const navigate = useNavigate();
+
     const [listing, setListing] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -24,6 +28,21 @@ const ListingDetail = () => {
         fetchListing();
     }, [id]);
 
+    const handleDelete = async () => {
+        if (window.confirm('Are you sure you want to delete this listing?')) {
+            try {
+                await axios.delete(`http://localhost:5000/api/listings/${id}`, {
+                    headers: {
+                        Authorization: `Bearer ${user.token}`,
+                    },
+                });
+                navigate('/');
+            } catch (err) {
+                alert('Failed to delete listing.');
+            }
+        }
+    };
+
     if (loading) return (
         <div className="loading-spinner">
             <div className="spinner"></div>
@@ -37,13 +56,22 @@ const ListingDetail = () => {
         </div>
     );
 
+    const isOwner = user && listing.creator && user._id === listing.creator._id;
+
     return (
         <div className="container section-py detail-container">
-            <div style={{ marginBottom: '2rem' }}>
+            <div style={{ marginBottom: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <Link to="/" style={{ color: 'var(--color-text-muted)', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                     Explore more trips
                 </Link>
+
+                {isOwner && (
+                    <div style={{ display: 'flex', gap: '1rem' }}>
+                        <Link to={`/listings/edit/${id}`} className="btn btn-accent">Edit Listing</Link>
+                        <button onClick={handleDelete} className="btn btn-danger">Delete</button>
+                    </div>
+                )}
             </div>
 
             <div className="detail-card">
