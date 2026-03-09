@@ -15,10 +15,17 @@ const Profile = () => {
     const [updateSuccess, setUpdateSuccess] = useState(false);
 
     const [formData, setFormData] = useState({
-        name: '',
+        name: user?.name || '',
         password: '',
         confirmPassword: ''
     });
+
+    // Effect to pre-fill name if user becomes available after mount
+    useEffect(() => {
+        if (user?.name && !formData.name) {
+            setFormData(prev => ({ ...prev, name: user.name }));
+        }
+    }, [user]);
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -34,15 +41,20 @@ const Profile = () => {
                     },
                 });
                 setProfileData(response.data);
+                // Sync form name with profile name if different
                 setFormData(prev => ({ ...prev, name: response.data.user.name }));
                 setLoading(false);
             } catch (err) {
-                setError('Failed to load profile.');
+                console.error("Profile Fetch Error Details:", err);
+                const msg = err.response?.data?.message || err.message || 'Failed to connect to profile server.';
+                setError(`${msg} (Please check if server is running on :5000)`);
                 setLoading(false);
             }
         };
 
-        fetchProfile();
+        if (user) {
+            fetchProfile();
+        }
     }, [user, navigate]);
 
     const handleChange = (e) => {

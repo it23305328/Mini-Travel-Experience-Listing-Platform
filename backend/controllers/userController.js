@@ -7,19 +7,23 @@ const bcrypt = require('bcryptjs');
 // @access  Private
 const getUserProfile = async (req, res) => {
     try {
+        console.log("Fetching profile for user ID:", req.user);
         const user = await User.findById(req.user).select('-password');
 
         if (!user) {
+            console.warn("User ID not found in database:", req.user);
             return res.status(404).json({ message: 'User not found' });
         }
 
         const listings = await Listing.find({ creator: req.user }).sort({ createdAt: -1 });
+        console.log(`Found ${listings.length} listings for user: ${user.name}`);
 
         res.json({
             user,
             listings
         });
     } catch (error) {
+        console.error("Profile API Error:", error);
         res.status(500).json({ message: 'Server error' });
     }
 };
