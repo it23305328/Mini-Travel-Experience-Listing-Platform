@@ -4,17 +4,30 @@ const Listing = require('../models/Listing');
 // @route   POST /api/listings
 // @access  Private
 const createListing = async (req, res) => {
+    console.log('Incoming Create Listing Request:', req.body);
+    console.log('Incoming File:', req.file);
+
     const {
         title,
         location,
-        imageUrl,
         shortDescription,
         fullDescription,
         price,
     } = req.body;
 
+    // Image URL can come from req.file (Cloudinary) or req.body.imageUrl (manual input)
+    let imageUrl = '';
+    if (req.file) {
+        imageUrl = req.file.path;
+    } else if (req.body.imageUrl) {
+        imageUrl = req.body.imageUrl;
+    }
+
+    console.log('Resulting Image URL:', imageUrl);
+
     if (!title || !location || !imageUrl || !shortDescription || !fullDescription) {
-        return res.status(400).json({ message: 'Please add all required fields' });
+        console.log('Validation Failed: Missing required fields');
+        return res.status(400).json({ message: 'Please add all required fields (including image photo or URL)' });
     }
 
     try {
@@ -25,12 +38,14 @@ const createListing = async (req, res) => {
             shortDescription,
             fullDescription,
             price,
-            creator: req.user, // Attached by auth middleware
+            creator: req.user,
         });
 
+        console.log('Listing Created Successfully:', listing._id);
         res.status(201).json(listing);
     } catch (error) {
-        res.status(500).json({ message: 'Server error' });
+        console.error('Error Creating Listing:', error);
+        res.status(500).json({ message: 'Server error creating listing: ' + error.message });
     }
 };
 
