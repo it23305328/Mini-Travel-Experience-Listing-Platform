@@ -24,8 +24,14 @@ const Navbar = () => {
                     </Link>
                     {user ? (
                         <>
+                            <Link to="/" className="nav-link">
+                                Feed
+                            </Link>
                             <Link to="/create-listing" className="nav-link">
-                                Post Trip
+                                Share Experience
+                            </Link>
+                            <Link to="/profile" className="nav-link">
+                                My Profile
                             </Link>
                             <span className="nav-user">Hi, {user.name}</span>
                             <button onClick={handleLogout} className="btn btn-danger">

@@ -8,6 +8,7 @@ import Feed from './pages/Feed';
 import ListingDetail from './pages/ListingDetail';
 import CreateListing from './pages/CreateListing';
 import EditListing from './pages/EditListing';
+import Profile from './pages/Profile';
 
 function App() {
     return (
@@ -22,6 +23,7 @@ function App() {
                         <Route path="/create-listing" element={<CreateListing />} />
                         <Route path="/listings/edit/:id" element={<EditListing />} />
                         <Route path="/listings/:id" element={<ListingDetail />} />
+                        <Route path="/profile" element={<Profile />} />
                     </Routes>
                 </div>
             </Router>
