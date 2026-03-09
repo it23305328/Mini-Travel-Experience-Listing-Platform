@@ -103,13 +103,25 @@ const updateListing = async (req, res) => {
             return res.status(401).json({ message: 'User not authorized' });
         }
 
-        const updatedListing = await Listing.findByIdAndUpdate(req.params.id, req.body, {
+        const updateData = { ...req.body };
+
+        // Handle image update if a file was uploaded or a new URL provided
+        if (req.file) {
+            updateData.imageUrl = req.file.path;
+        } else if (req.body.imageUrl) {
+            updateData.imageUrl = req.body.imageUrl;
+        }
+
+        console.log('Updating Listing with data:', updateData);
+
+        const updatedListing = await Listing.findByIdAndUpdate(req.params.id, updateData, {
             new: true,
         });
 
         res.json(updatedListing);
     } catch (error) {
-        res.status(500).json({ message: 'Server error' });
+        console.error('Update Error:', error);
+        res.status(500).json({ message: 'Server error updating listing: ' + error.message });
     }
 };
 

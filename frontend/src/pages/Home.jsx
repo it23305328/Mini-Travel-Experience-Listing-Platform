@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import Loading from '../components/Loading';
 import '../styles/home.css';
 import '../styles/cards.css';
 
@@ -14,7 +15,7 @@ const Home = () => {
     useEffect(() => {
         const fetchListings = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/listings');
+                const response = await axios.get('/api/listings');
                 setListings(response.data);
                 setFilteredListings(response.data);
                 setLoading(false);
@@ -102,7 +103,7 @@ const Home = () => {
                 </div>
 
                 {loading ? (
-                    <div className="loading-spinner"><div className="spinner"></div></div>
+                    <Loading />
                 ) : error ? (
                     <div className="alert alert-error">{error}</div>
                 ) : (

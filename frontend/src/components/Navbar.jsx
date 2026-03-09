@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import logo from '../assets/iii.png';
 import '../styles/navbar.css';
 
 const Navbar = () => {
@@ -16,7 +17,8 @@ const Navbar = () => {
         <nav className="navbar">
             <div className="container navbar-inner">
                 <Link to="/" className="nav-brand">
-                    TravelExp
+                    <img src={logo} alt="Logo" className="nav-logo" />
+                    Travelista Tours
                 </Link>
                 <div className="nav-links">
                     <Link to="/" className="nav-link">

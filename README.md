@@ -10,9 +10,10 @@ The **Mini Travel Experience** platform allows users to create detailed listings
 ---
 
 ## 🛠 Tech Stack
-- **Frontend**: ⚛️ React.js (Vite), 🎨 Tailwind CSS
+- **Frontend**: ⚛️ React.js (Vite), 🎨 Vanilla CSS (Premium Glassmorphism)
 - **Backend**: 🟢 Node.js, 🚂 Express.js
 - **Database**: 🍃 MongoDB (Mongoose ODM)
+- **Storage**: ☁️ Cloudinary (Image CDN)
 - **Authentication**: 🔐 JSON Web Tokens (JWT)
 - **API Client**: 📡 Axios
 
@@ -35,6 +36,9 @@ npm install
   PORT=5000
   MONGO_URI=your_mongodb_connection_string
   JWT_SECRET=your_super_secret_key
+  CLOUDINARY_CLOUD_NAME=your_cloud_name
+  CLOUDINARY_API_KEY=your_api_key
+  CLOUDINARY_API_SECRET=your_api_secret
   ```
 - Start the server:
   ```bash

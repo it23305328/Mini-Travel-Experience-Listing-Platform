@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import Loading from '../components/Loading';
 import '../styles/cards.css';
 
 const Profile = () => {
@@ -35,7 +36,7 @@ const Profile = () => {
             }
 
             try {
-                const response = await axios.get('http://localhost:5000/api/users/profile', {
+                const response = await axios.get('/api/users/profile', {
                     headers: {
                         Authorization: `Bearer ${user.token}`,
                     },
@@ -78,7 +79,7 @@ const Profile = () => {
                 updatePayload.password = formData.password;
             }
 
-            const response = await axios.put('http://localhost:5000/api/users/profile', updatePayload, {
+            const response = await axios.put('/api/users/profile', updatePayload, {
                 headers: {
                     Authorization: `Bearer ${user.token}`,
                 },
@@ -110,11 +111,7 @@ const Profile = () => {
         return Math.floor(seconds) + " seconds ago";
     };
 
-    if (loading) return (
-        <div className="loading-spinner">
-            <div className="spinner"></div>
-        </div>
-    );
+    if (loading) return <Loading />;
 
     return (
         <div className="container section-py">

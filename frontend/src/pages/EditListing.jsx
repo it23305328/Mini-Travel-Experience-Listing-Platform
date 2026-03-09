@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import Loading from '../components/Loading';
 
 const EditListing = () => {
     const { id } = useParams();
@@ -17,6 +18,8 @@ const EditListing = () => {
         price: '',
     });
 
+    const [imageFile, setImageFile] = useState(null);
+    const [preview, setPreview] = useState(null);
     const [loading, setLoading] = useState(true);
     const [updating, setUpdating] = useState(false);
     const [error, setError] = useState(null);
@@ -24,7 +27,7 @@ const EditListing = () => {
     useEffect(() => {
         const fetchListing = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/api/listings/${id}`);
+                const response = await axios.get(`/api/listings/${id}`);
                 const listing = response.data;
 
                 // Verify if logged in user is the creator
@@ -59,14 +62,37 @@ const EditListing = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setImageFile(file);
+            setPreview(URL.createObjectURL(file));
+            // Keep track that we are using a file now
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setUpdating(true);
         setError(null);
 
+        const data = new FormData();
+        data.append('title', formData.title);
+        data.append('location', formData.location);
+        data.append('shortDescription', formData.shortDescription);
+        data.append('fullDescription', formData.fullDescription);
+        data.append('price', formData.price);
+
+        if (imageFile) {
+            data.append('image', imageFile);
+        } else {
+            data.append('imageUrl', formData.imageUrl);
+        }
+
         try {
-            await axios.put(`http://localhost:5000/api/listings/${id}`, formData, {
+            await axios.put(`/api/listings/${id}`, data, {
                 headers: {
+                    'Content-Type': 'multipart/form-data',
                     Authorization: `Bearer ${user.token}`,
                 },
             });
@@ -77,23 +103,19 @@ const EditListing = () => {
         }
     };
 
-    if (loading) return (
-        <div className="loading-spinner">
-            <div className="spinner"></div>
-        </div>
-    );
+    if (loading) return <Loading />;
 
     return (
         <div className="container section-py" style={{ maxWidth: '800px' }}>
             <div className="auth-card" style={{ maxWidth: '100%', padding: '0', overflow: 'hidden' }}>
                 <div style={{
-                    background: 'var(--color-primary)',
+                    background: 'var(--primary-dark)',
                     padding: '3rem',
-                    color: 'var(--color-white)',
+                    color: 'var(--white)',
                     textAlign: 'center'
                 }}>
                     <h1 style={{ fontSize: '2.5rem', fontWeight: '800', marginBottom: '0.5rem' }}>Edit Your Experience</h1>
-                    <p style={{ opacity: '0.8', fontStyle: 'italic' }}>Update your travel story for the community</p>
+                    <p style={{ opacity: '0.8', fontStyle: 'italic' }}>Update your travel story or swap the photo</p>
                 </div>
 
                 <form onSubmit={handleSubmit} style={{ padding: '3rem' }}>
@@ -128,18 +150,58 @@ const EditListing = () => {
                         </div>
                     </div>
 
-                    <div className="form-group">
-                        <label htmlFor="imageUrl">Image URL</label>
-                        <input
-                            type="url"
-                            id="imageUrl"
-                            name="imageUrl"
-                            value={formData.imageUrl}
-                            onChange={handleChange}
-                            placeholder="Link to a stunning high-res image"
-                            required
-                        />
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', marginBottom: '1.5rem', marginTop: '1rem' }}>
+                        <div className="form-group">
+                            <label htmlFor="image">1. Upload New Photo (Optional)</label>
+                            <input
+                                type="file"
+                                id="image"
+                                name="image"
+                                accept="image/*"
+                                onChange={handleFileChange}
+                                style={{
+                                    padding: '0.5rem',
+                                    border: '2px dashed #cbd5e1',
+                                    background: '#f8fafc',
+                                    cursor: 'pointer'
+                                }}
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor="imageUrl">2. OR Update URL</label>
+                            <input
+                                type="url"
+                                id="imageUrl"
+                                name="imageUrl"
+                                value={formData.imageUrl}
+                                onChange={(e) => {
+                                    handleChange(e);
+                                    if (e.target.value) {
+                                        setImageFile(null);
+                                        setPreview(null);
+                                    }
+                                }}
+                                placeholder="Link to image"
+                            />
+                        </div>
                     </div>
+
+                    {(preview || formData.imageUrl) && (
+                        <div className="image-preview" style={{ marginBottom: '2rem', textAlign: 'center' }}>
+                            <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)', marginBottom: '0.5rem' }}>Current/New Preview:</p>
+                            <img
+                                src={preview || formData.imageUrl}
+                                alt="Preview"
+                                style={{
+                                    maxWidth: '100%',
+                                    maxHeight: '250px',
+                                    borderRadius: '12px',
+                                    boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+                                }}
+                            />
+                        </div>
+                    )}
 
                     <div className="form-group">
                         <label htmlFor="price">Price (USD)</label>
@@ -147,9 +209,10 @@ const EditListing = () => {
                             type="number"
                             id="price"
                             name="price"
+                            min="0"
                             value={formData.price}
                             onChange={handleChange}
-                            placeholder="Estimated cost per person"
+                            placeholder="Estimated cost"
                         />
                     </div>
 
@@ -161,7 +224,7 @@ const EditListing = () => {
                             name="shortDescription"
                             value={formData.shortDescription}
                             onChange={handleChange}
-                            placeholder="A brief hook for your trip"
+                            placeholder="A brief hook"
                             maxLength="150"
                             required
                         />
@@ -174,8 +237,8 @@ const EditListing = () => {
                             name="fullDescription"
                             value={formData.fullDescription}
                             onChange={handleChange}
-                            placeholder="Describe every detail of your experience..."
                             required
+                            rows="6"
                         ></textarea>
                     </div>
 
@@ -192,9 +255,9 @@ const EditListing = () => {
                             type="submit"
                             disabled={updating}
                             className="btn btn-primary"
-                            style={{ flex: 2 }}
+                            style={{ flex: 2, background: 'var(--brand-blue)' }}
                         >
-                            {updating ? 'Updating...' : 'Save Changes'}
+                            {updating ? 'Saving Changes...' : 'Save Changes'}
                         </button>
                     </div>
                 </form>

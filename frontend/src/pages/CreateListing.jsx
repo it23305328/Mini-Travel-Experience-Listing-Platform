@@ -69,7 +69,7 @@ const CreateListing = () => {
         }
 
         try {
-            await axios.post('http://localhost:5000/api/listings', data, {
+            await axios.post('/api/listings', data, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     Authorization: `Bearer ${user.token}`,

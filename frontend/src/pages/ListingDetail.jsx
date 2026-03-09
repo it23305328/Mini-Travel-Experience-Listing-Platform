@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import Loading from '../components/Loading';
 import '../styles/cards.css';
 
 const ListingDetail = () => {
@@ -16,7 +17,7 @@ const ListingDetail = () => {
     useEffect(() => {
         const fetchListing = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/api/listings/${id}`);
+                const response = await axios.get(`/api/listings/${id}`);
                 setListing(response.data);
                 setLoading(false);
             } catch (err) {
@@ -31,7 +32,7 @@ const ListingDetail = () => {
     const handleDelete = async () => {
         if (window.confirm('Are you sure you want to delete this listing?')) {
             try {
-                await axios.delete(`http://localhost:5000/api/listings/${id}`, {
+                await axios.delete(`/api/listings/${id}`, {
                     headers: {
                         Authorization: `Bearer ${user.token}`,
                     },
@@ -43,11 +44,7 @@ const ListingDetail = () => {
         }
     };
 
-    if (loading) return (
-        <div className="loading-spinner">
-            <div className="spinner"></div>
-        </div>
-    );
+    if (loading) return <Loading />;
 
     if (error || !listing) return (
         <div className="container section-py" style={{ textAlign: 'center' }}>

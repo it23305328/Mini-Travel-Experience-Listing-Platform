@@ -10,7 +10,7 @@ router.route('/')
 
 router.route('/:id')
     .get(getListingById)
-    .put(protect, updateListing)
+    .put(protect, upload.single('image'), updateListing)
     .delete(protect, deleteListing);
 
 module.exports = router;

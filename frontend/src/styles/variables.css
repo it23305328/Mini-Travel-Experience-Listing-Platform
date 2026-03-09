@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@400;600;800&family=Great+Vibes&display=swap');
+
 :root {
     /* Premium Color Palette */
     --primary-dark: #0f172a;
@@ -13,6 +15,7 @@
 
     /* Typography */
     --font-family: 'Poppins', 'Inter', sans-serif;
+    --font-cursive: 'Great Vibes', cursive;
 
     /* Layout tokens */
     --radius-md: 12px;

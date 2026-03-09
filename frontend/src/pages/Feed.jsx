@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import Loading from '../components/Loading';
 import '../styles/cards.css';
 
 const Feed = () => {
@@ -13,7 +14,7 @@ const Feed = () => {
     useEffect(() => {
         const fetchListings = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/listings');
+                const response = await axios.get('/api/listings');
                 setListings(response.data);
                 setFilteredListings(response.data);
                 setLoading(false);
@@ -50,11 +51,7 @@ const Feed = () => {
         return Math.floor(seconds) + " seconds ago";
     };
 
-    if (loading) return (
-        <div className="loading-spinner">
-            <div className="spinner"></div>
-        </div>
-    );
+    if (loading) return <Loading />;
 
     if (error) return (
         <div className="container section-py">

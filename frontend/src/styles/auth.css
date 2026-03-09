@@ -26,8 +26,8 @@
 }
 
 .auth-brand-name {
-    font-family: 'Brush Script MT', cursive, sans-serif;
-    font-size: clamp(3rem, 8vw, 5.5rem);
+    font-family: var(--font-cursive);
+    font-size: clamp(3.5rem, 8vw, 6.5rem);
     margin-bottom: 1rem;
     text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
     text-align: center;
@@ -147,6 +147,74 @@
     opacity: 0.08;
     pointer-events: none;
     z-index: 1;
+}
+
+.auth-social-separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 2rem 0;
+    color: #cbd5e1;
+}
+
+.auth-social-separator::before,
+.auth-social-separator::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1.5px solid #f1f5f9;
+}
+
+.auth-social-separator span {
+    padding: 0 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.auth-social-group {
+    display: flex;
+    justify-content: center;
+    gap: 1.25rem;
+}
+
+.social-btn {
+    width: 50px;
+    height: 50px;
+    background: #f8fafc;
+    border: 1.5px solid #f1f5f9;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(--primary-dark);
+}
+
+.social-btn:hover {
+    background: #fff;
+    border-color: #00aeef;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
+}
+
+.social-btn svg {
+    transition: transform 0.3s ease;
+}
+
+.social-btn:hover svg {
+    transform: scale(1.1);
+}
+
+.social-btn.google:hover {
+    color: #db4437;
+}
+
+.social-btn.facebook:hover {
+    color: #4267B2;
+}
+
+.social-btn.twitter:hover {
+    color: #1DA1F2;
 }
 
 @media (max-width: 968px) {
